@@ -1,0 +1,22 @@
+{% extends 'files/base.html' %}
+{% block content %}
+
+    {% if product.count > 0 %}
+    <h2>Материалы:</h2>
+    <table>
+        <thead>
+           <th>Id</th><th>Материал</th><th>Цена</th><th>Разрешение</th>
+           <th></th>
+       </thead>
+        {% for product in product %}
+        <tr>
+            <td>{{ product.id }}</td>
+<!--            <td>{{ product.name }}</td>-->
+            <td>{{ product.name }}</td>
+            <td>{{ product.price }}<text> руб.</text></td>
+            <td>{{ product.resolution_print }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+{% endblock %}
