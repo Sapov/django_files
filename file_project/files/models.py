@@ -92,7 +92,7 @@ class Orders(models.Model):
 
 
 class UploadArhive(models.Model):
-    path_file = models.FileField(upload_to='image/arhive/%y/%m/%d')
+    path_file = models.FileField(upload_to='image')
     # def un_zip(self):
 
 

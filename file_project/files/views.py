@@ -35,6 +35,7 @@ def material(request):
     product = Material.objects.all()
     return render(request, "files/material.html", {"product": product, 'title': 'Материалы', 'menu': menu})
 
+
 # def profile(request):
 #     product = Profile.objects.all()
 #     return render(request, "files/profile.html", {"product": product, 'title': 'Профиль', 'menu': menu})
@@ -123,9 +124,8 @@ def order_add(request):
 
 
 def unzip(arh_name):
-    # with zipfile.ZipFile(arh_name) as zf:
-    #     zf.extractall('image/arh')
-    patoolib.extract_archive(str(arh_name), outdir="image/arh/test")
+    print(arh_name)
+    patoolib.extract_archive(str(arh_name), outdir="unzip")
 
 
 def upload_arh(request):
@@ -134,10 +134,16 @@ def upload_arh(request):
 
         if form.is_valid():
             print(form.cleaned_data['path_file'])
+           # сюда написать функцию которая убирает пробелы в имени файла
+
             arh_name = form.cleaned_data['path_file']
-            print(type(arh_name))
+            path_download = os.path.abspath(str(arh_name))
+            print(f' Путь абсoлютный {path_download}')
             form.save()
-            unzip(arh_name)
+            # unzip(path_download)  # f'image/arhive/{arh_name}'
+            #не получилось нормальный путь указать
+            unzip(f'C:\\Users\\sasha\\PycharmProjects\\django_files\\file_project\\media\\image\\{arh_name}')  # f'image/arhive/{arh_name}'
+            # unzip(arh_name)  # f'image/arhive/{arh_name}'
 
             return HttpResponseRedirect("/")
     else:
