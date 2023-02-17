@@ -54,7 +54,7 @@ class Product(models.Model):
                                    help_text="Для корректной печати модель должна быть CMYK")
     size = models.FloatField(default=0, verbose_name="Размер в Мб")
     # price = models.FloatFeld(default=0, verbose_name="Стоимость")
-    path_file = models.FileField(upload_to='image/%y_%m_%d')
+    path_file = models.FileField(upload_to='image/%d_%m_%y')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Добавлено")  # date created
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Изменено")  # date update
     objects = models.Manager()

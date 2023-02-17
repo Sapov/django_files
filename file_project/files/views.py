@@ -1,6 +1,7 @@
 import os
 # import zipfile
 import patoolib
+from pathlib import Path
 
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponseNotFound, HttpResponse
@@ -128,23 +129,30 @@ def unzip(arh_name):
     patoolib.extract_archive(str(arh_name), outdir="unzip")
 
 
+def add_files_in_base():
+    list_files = os.listdir(os.path.relpath('unzip'))
+    print(list_files)
+    print(os.path.relpath('unzip'))
+
+
 def upload_arh(request):
     if request.POST:
         form = UploadArhive(request.POST, request.FILES)
 
         if form.is_valid():
             print(form.cleaned_data['path_file'])
-           # сюда написать функцию которая убирает пробелы в имени файла
+            # сюда написать функцию которая убирает пробелы в имени файла
 
             arh_name = form.cleaned_data['path_file']
             path_download = os.path.abspath(str(arh_name))
             print(f' Путь абсoлютный {path_download}')
             form.save()
-            # unzip(path_download)  # f'image/arhive/{arh_name}'
-            #не получилось нормальный путь указать
-            unzip(f'C:\\Users\\sasha\\PycharmProjects\\django_files\\file_project\\media\\image\\{arh_name}')  # f'image/arhive/{arh_name}'
-            # unzip(arh_name)  # f'image/arhive/{arh_name}'
-
+            # если это архив - то разархивировать
+            # не получилось нормальный путь указать
+            unzip(
+                f'C:\\Users\\sasha\\PycharmProjects\\django_files\\file_project\\media\\image\\{arh_name}')  # f'image/arhive/{arh_name}'
+            # прочитать фалйлы и вызвать на экран
+            add_files_in_base()
             return HttpResponseRedirect("/")
     else:
         form = UploadArhive
